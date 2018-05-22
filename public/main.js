@@ -4,7 +4,7 @@ var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection 
 var RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
 navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia;
 
-var twilioIceServers = [
+/*var twilioIceServers = [
      { url: 'stun:global.stun.twilio.com:3478?transport=udp' }
      // { url: 'turn:global.turn.twilio.com:3478?transport=udp',
      //   username: 'ea757ad2c42b932c7f2abe480295e7eb039dc2b13b78c86bc412818ed51e5eea',
@@ -15,8 +15,10 @@ var twilioIceServers = [
      // { url: 'turn:global.turn.twilio.com:443?transport=tcp',
      //   username: 'ea757ad2c42b932c7f2abe480295e7eb039dc2b13b78c86bc412818ed51e5eea',
      //   credential: 'MPnnojPRoPDI+B3kLONGF9P440Lb8NkrTq+FxxJBVro=' } 
-];
-var configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
+];*/
+
+//var configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
+var configuration = {"iceServers": [{"urls": "stun:stun.l.google.com:19302"}]};
 // configuration.iceServers = twilioIceServers;
 
 var pcPeers = {};
@@ -26,8 +28,8 @@ var localStream;
 
 function getLocalStream() {
   navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
-    localStream = stream;
-    selfView.src = URL.createObjectURL(stream);
+    localStream = stream;    
+    selfView.srcObject = stream;
     selfView.muted = true;
   }, logError);
 }
@@ -84,8 +86,8 @@ function createPC(socketId, isOffer) {
     console.log('onaddstream', event);
     var element = document.createElement('video');
     element.id = "remoteView" + socketId;
-    element.autoplay = 'autoplay';
-    element.src = URL.createObjectURL(event.stream);
+    element.autoplay = 'autoplay';    
+    element.srcObject = event.stream;
     remoteViewContainer.appendChild(element);
   };
   pc.addStream(localStream);
