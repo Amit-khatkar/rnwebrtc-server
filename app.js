@@ -26,6 +26,7 @@ app.get('/', function(req, res){
   console.log('get /');
   res.sendFile(__dirname + '/index.html');
 });
+server.timeout = 0;
 server.listen(serverPort, function(){
   console.log('server up and running at %s port', serverPort);
   if (process.env.LOCAL) {
@@ -36,6 +37,11 @@ server.listen(serverPort, function(){
 server.on('clientError', (err, socket) => {
   console.error('clientError', err);
   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
+server.on('uncaughtException', function (err) {
+  console.error(err.stack);
+  console.log("Node NOT Exiting...");
 });
 
 function socketIdsInRoom(name) {
