@@ -33,6 +33,11 @@ server.listen(serverPort, function(){
   }
 });
 
+server.on('clientError', (err, socket) => {
+  console.error('clienterror', err);
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
 function socketIdsInRoom(name) {
   var socketIds = io.nsps['/'].adapter.rooms[name];
   if (socketIds) {
