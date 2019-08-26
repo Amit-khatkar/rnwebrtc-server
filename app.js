@@ -34,7 +34,7 @@ server.listen(serverPort, function(){
 });
 
 server.on('clientError', (err, socket) => {
-  console.error('clienterror', err);
+  console.error('clientError', err);
   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
 });
 
