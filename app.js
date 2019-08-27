@@ -8,12 +8,12 @@ var options = {
 };
 var serverPort = (process.env.PORT  || 4443);
 var https = require('https');
-var http = require('https');
+var http = require('http');
 var server;
 if (process.env.LOCAL) {
   server = https.createServer(options, app);
 } else {
-  server = http.createServer(app);
+  server = https.createServer(options, app);
 }
 const ioOptions = { transports: ['websocket'], pingTimeout: 3000, pingInterval: 5000 }
 var io = require('socket.io')(server, ioOptions);
