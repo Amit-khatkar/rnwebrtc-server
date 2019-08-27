@@ -13,7 +13,7 @@ var server;
 if (process.env.LOCAL) {
   server = https.createServer(options, app);
 } else {
-  server = https.createServer(options, app);
+  server = http.createServer(app);
 }
 const ioOptions = { transports: ['websocket'], pingTimeout: 3000, pingInterval: 5000 }
 var io = require('socket.io')(server, ioOptions);
