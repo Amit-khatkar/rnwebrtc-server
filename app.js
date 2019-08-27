@@ -15,7 +15,8 @@ if (process.env.LOCAL) {
 } else {
   server = http.createServer(app);
 }
-var io = require('socket.io')(server);
+const ioOptions = { transports: ['websocket'], pingTimeout: 3000, pingInterval: 5000 }
+var io = require('socket.io')(server, ioOptions);
 
 var roomList = {};
 
