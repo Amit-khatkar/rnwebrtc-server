@@ -8,7 +8,7 @@ var options = {
 };
 var serverPort = (process.env.PORT  || 4443);
 var https = require('https');
-var http = require('http');
+var http = require('https');
 var server;
 if (process.env.LOCAL) {
   server = https.createServer(options, app);
